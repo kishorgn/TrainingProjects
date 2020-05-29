@@ -19,6 +19,32 @@ table, th, td {
 </style>
 </head>
 <body>
+
+	<%
+		if(session.getAttribute("empid")!=null){
+			Integer empid = (Integer)session.getAttribute("empid");
+			%>
+			New employee created with id : <%= empid %>
+			<%
+			empid = null;
+			session.removeAttribute("empid");
+		}
+	
+		if(session.getAttribute("editMsg")!=null){
+			%>
+			<%= session.getAttribute("editMsg") %><br><br>
+			<%
+			session.removeAttribute("editMsg");
+		}
+		
+		if(session.getAttribute("delMsg")!=null){
+			%>
+			<%= session.getAttribute("delMsg") %>
+			<%
+			session.removeAttribute("delMsg");
+		}
+	
+	%>
 	<h2>List of Employees</h2>
 	<%
 		EmployeeService employeeService = new EmployeeDaoService();
@@ -42,11 +68,16 @@ table, th, td {
 			<td><%= employee.getDob() %></td>
 			<td><%= employee.getDeptno() %>
 			<td><%= employee.getBsal() %></td>
-			<td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+			<td><a href="EditEmployee.jsp?id=<%= employee.getId()%>">Edit</a> | 
+				<a href="deleteEmployeeController?id=<%=employee.getId()%>" onclick="return confirm('Are you sure to delete <%= employee.getName() %> details?')">Delete</a></td>
 			</tr>
 			<%
 		}
 	%>
 	</table>
+	<br>
+	<br>
+	<a href="AddEmployee.jsp">Add new employee</a><br><br>
+	<a href="signoutController">Signout</a>
 </body>
 </html>

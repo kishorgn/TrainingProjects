@@ -56,7 +56,7 @@ public class EmployeeJdbcDao extends Dao implements EmployeeDAO {
 			pstmt.setDate(2, new java.sql.Date(dob.getTime()));
 			pstmt.setInt(3, employee.getDeptno());
 			pstmt.setDouble(4, employee.getBsal());
-			pstmt.setInt(1, employee.getId());
+			pstmt.setInt(5, employee.getId());
 			return 1==pstmt.executeUpdate() ;
 		}
 		finally {
@@ -177,7 +177,7 @@ public class EmployeeJdbcDao extends Dao implements EmployeeDAO {
 			con = ConnectionManager.getConnection();
 			con.commit();
 			stmt = con.createStatement();
-			rs = stmt.executeQuery("SELECT max(id) FROM emploee");
+			rs = stmt.executeQuery("SELECT max(id) FROM employee");
 			if(rs.next()) {
 				maxId = rs.getInt(1);
 				if(maxId == 0) {
@@ -188,7 +188,10 @@ public class EmployeeJdbcDao extends Dao implements EmployeeDAO {
 		}
 		finally {
 			try {
-				rs.close();
+				if(rs!=null) {
+					rs.close();
+				}
+				
 			}
 			catch (SQLException e) {
 				throw e;

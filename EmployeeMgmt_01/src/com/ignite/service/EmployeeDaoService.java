@@ -12,9 +12,11 @@ public class EmployeeDaoService implements EmployeeService {
 
 	@Override
 	public int save(Employee employee) throws EmployeeException {
+//		System.out.println("employee in EmployeeDaoService : save - "+employee);
 		EmployeeJdbcDao employeeDAO = null;
 		try {
 			employeeDAO = new EmployeeJdbcDao();
+//			System.out.println("employeeDAO in EmployeeDaoService : save - "+employeeDAO);
 			int empid = employeeDAO.insert(employee);
 			return empid;
 		} catch (ClassNotFoundException e) {

@@ -157,7 +157,6 @@ public class UserJdbcDao extends Dao implements UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			User user = null;
 			con = ConnectionManager.getConnection();
 			con.commit();
 			pstmt = con.prepareStatement("SELECT * FROM user WHERE username = ? and password = ?");
@@ -168,7 +167,10 @@ public class UserJdbcDao extends Dao implements UserDAO {
 		}
 		finally {
 			try {
-				rs.close();
+				if(rs!=null) {
+					rs.close();
+				}
+				
 			}
 			catch (SQLException e) {
 				throw e;
